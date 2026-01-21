@@ -1,23 +1,50 @@
-# PHP Console (CLI helper)
+# php-console-logger
 
-Tiny `Console` class for PHP 7.3+ cron/CLI scripts:
-- Color output via ANSI (only when TTY)
-- Disable colors with `NO_COLOR=1`
-- Errors go to `STDERR`
-- `Key: Value` aligned output
-- Strips ANSI/control chars from user-provided text (basic terminal injection protection)
+Мини-класс `Console` для PHP 7.3+ (CLI/cron): аккуратный вывод в терминал, цвета через ANSI, ошибки в `STDERR`, отключение цветов через `NO_COLOR`, выравнивание `Key: Value`.
 
-## Install
+## Что решаем
 
-Just copy `src/Console.php` into your project and `require_once` it.
+Когда пишешь cron/CLI-скрипты, обычно хочется:
+- чтобы статусы были читаемыми (`[OK]`, `[WARN]`, `[ERR]`)
+- чтобы ошибки шли в `STDERR` (удобно для логов и мониторинга)
 
-## Usage
+Этот класс закрывает эти задачи без зависимостей.
+
+## Возможности
+
+- Методы: `Info()`, `Success()`, `Warn()`, `Error()`, `Debug()`
+- Ключ-значение: `Kv("id", "777")` с выравниванием
+- Цвета через ANSI, только если:
+	- вывод идёт в терминал (TTY)
+	- `TERM` не `dumb`
+	- не задано `NO_COLOR`
+- Ошибки в `STDERR` (`Error()` печатает в `STDERR`)
+- `CleanText()` чистит пользовательский текст от ANSI/CSI и управляющих символов
+
+## Установка
+
+Просто скопируй `src/Console.php` в свой проект и подключи:
+
+```php
+require_once __DIR__ . '/src/Console.php';
+```
+
+## Пример использования
 
 ```php
 require_once __DIR__ . '/src/Console.php';
 
-Console::Info("Cron started");
-Console::Kv("EAN", "4000530391957");
-Console::Success("Sent to Amazon");
-Console::Warn("Price is empty - skip");
+Console::Info("Started");
+Console::Kv("id", "777");
+Console::Success("OK");
+Console::Warn("id is empty");
 Console::Error("API failed: 429 Too Many Requests");
+```
+
+## Отключение цветов
+
+Если нужно принудительно отключить цвета (например, для логов):
+
+```php
+NO_COLOR=1 php examples/demo.php
+```
