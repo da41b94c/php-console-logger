@@ -1,0 +1,16 @@
+{
+	"name": "da41b94c/php-console-logger",
+	"description": "Мини-класс Console для PHP 7.3+ (CLI/cron): ANSI-цвета, STDERR, NO_COLOR, Key: Value.",
+	"type": "library",
+	"license": "MIT",
+	"require": {
+		"php": ">=7.3"
+	},
+	"autoload": {
+		"psr-4": {
+			"Da41b94c\\ConsoleLogger\\": "src/"
+		}
+	},
+	"minimum-stability": "stable",
+	"prefer-stable": true
+}

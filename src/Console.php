@@ -1,5 +1,8 @@
 <?php
+
 declare(strict_types=1);
+
+namespace Da41b94c\ConsoleLogger;
 
 final class Console
 {

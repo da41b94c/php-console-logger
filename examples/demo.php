@@ -1,7 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
-require_once __DIR__ . '/../src/Console.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Da41b94c\ConsoleLogger\Console;
 
 Console::Info("Started");
 Console::Kv("id", "777");
