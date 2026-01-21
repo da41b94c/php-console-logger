@@ -1,41 +1,41 @@
 name: CI
 
 on:
-	push:
-		branches: [ "main" ]
-	pull_request:
+  push:
+    branches: ["main"]
+  pull_request: {}
 
 jobs:
-	php:
-		name: PHP ${{ matrix.php }}
-		runs-on: ubuntu-latest
+  php:
+    name: PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
 
-		strategy:
-			fail-fast: false
-			matrix:
-				php: [ "7.3", "7.4", "8.0", "8.1", "8.2", "8.3" ]
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ["7.3", "7.4", "8.0", "8.1", "8.2", "8.3"]
 
-		steps:
-			- name: Checkout
-				uses: actions/checkout@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-			- name: Setup PHP
-				uses: shivammathur/setup-php@v2
-				with:
-					php-version: ${{ matrix.php }}
-					coverage: none
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
 
-			- name: PHP version
-				run: php -v
+      - name: PHP version
+        run: php -v
 
-			- name: Lint src and examples
-				shell: bash
-				run: |
-					set -euo pipefail
-					Files=$(find src examples -type f -name "*.php")
-					for File in $Files; do
-						php -l "$File"
-					done
+      - name: Lint src and examples
+        shell: bash
+        run: |
+          set -euo pipefail
+          Files=$(find src examples -type f -name "*.php")
+          for File in $Files; do
+            php -l "$File"
+          done
 
-			- name: Run demo
-				run: php examples/demo.php
+      - name: Run demo
+        run: php examples/demo.php
